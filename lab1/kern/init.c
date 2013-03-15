@@ -47,6 +47,7 @@ i386_init(void)
         //test_backtrace(5);
         cprintf("my test\n");
         cprintf("x %d, y %x, z %d\n", x, y, z);
+        unsigned int i = 0x00646c72; cprintf("H%x Wo%s", 57616, &i);
 
 	// Drop into the kernel monitor.
 	while (1)
