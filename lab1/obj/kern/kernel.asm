@@ -225,6 +225,7 @@ f0100182:	83 ec 14             	sub    $0x14,%esp
 f0100185:	8b 5d 08             	mov    0x8(%ebp),%ebx
         int a = 1;
         char b = 'c';
+        a += 5;
 	cprintf("entering test_backtrace %d\n", x);
 f0100188:	89 5c 24 04          	mov    %ebx,0x4(%esp)
 f010018c:	c7 04 24 51 17 10 f0 	movl   $0xf0101751,(%esp)

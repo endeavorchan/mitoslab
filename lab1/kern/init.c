@@ -13,6 +13,7 @@ test_backtrace(int x)
 {
         int a = 1;
         char b = 'c';
+        a += 5;
 	cprintf("entering test_backtrace %d\n", x);
 	if (x > 0)
 		test_backtrace(x-1);
