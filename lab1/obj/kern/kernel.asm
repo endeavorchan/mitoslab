@@ -154,7 +154,7 @@ i386_init(void)
 f01000dd:	55                   	push   %ebp
 f01000de:	89 e5                	mov    %esp,%ebp
 f01000e0:	83 ec 18             	sub    $0x18,%esp
-        int x = 1, y = 3, z = 4;
+        int x = -1, y = -3, z = -4;
 
 	// Before doing anything else, complete the ELF loading process.
 	// Clear the uninitialized global data (BSS) section of our program.
@@ -187,12 +187,12 @@ f0100119:	e8 4d 08 00 00       	call   f010096b <cprintf>
 f010011e:	c7 04 24 0d 17 10 f0 	movl   $0xf010170d,(%esp)
 f0100125:	e8 41 08 00 00       	call   f010096b <cprintf>
         cprintf("x %d, y %x, z %d\n", x, y, z);
-f010012a:	c7 44 24 0c 04 00 00 	movl   $0x4,0xc(%esp)
-f0100131:	00 
-f0100132:	c7 44 24 08 03 00 00 	movl   $0x3,0x8(%esp)
-f0100139:	00 
-f010013a:	c7 44 24 04 01 00 00 	movl   $0x1,0x4(%esp)
-f0100141:	00 
+f010012a:	c7 44 24 0c fc ff ff 	movl   $0xfffffffc,0xc(%esp)
+f0100131:	ff 
+f0100132:	c7 44 24 08 fd ff ff 	movl   $0xfffffffd,0x8(%esp)
+f0100139:	ff 
+f010013a:	c7 44 24 04 ff ff ff 	movl   $0xffffffff,0x4(%esp)
+f0100141:	ff 
 f0100142:	c7 04 24 16 17 10 f0 	movl   $0xf0101716,(%esp)
 f0100149:	e8 1d 08 00 00       	call   f010096b <cprintf>
 
