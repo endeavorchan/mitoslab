@@ -151,6 +151,7 @@ vprintfmt(void (*putch)(int, void*), void *putdat, const char *fmt, va_list ap)
 	unsigned long long num;
 	int base, lflag, width, precision, altflag;
 	char padc;
+        int c_flag, color;
 
 	while (1) {
 		while ((ch = *(unsigned char *) fmt++) != '%') {
