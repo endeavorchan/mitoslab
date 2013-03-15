@@ -30,9 +30,9 @@
  */
 
   /* choose colors of back and fore ground*/
-int get_color(int fore_back, char type)  
+uint16_t get_color(int fore_back, char type)  
 {  
-    int color = 0;  
+    uint16_t color = 0;  
   
     if (fore_back == 1) //foreground  
     {  
@@ -151,7 +151,8 @@ vprintfmt(void (*putch)(int, void*), void *putdat, const char *fmt, va_list ap)
 	unsigned long long num;
 	int base, lflag, width, precision, altflag;
 	char padc;
-        int c_flag, color;
+        int c_flag;
+        uint16_t color = 0;
 
 	while (1) {
 		while ((ch = *(unsigned char *) fmt++) != '%') {
@@ -161,7 +162,8 @@ vprintfmt(void (*putch)(int, void*), void *putdat, const char *fmt, va_list ap)
             		if (ch == '$') //foreground color  
             		{  
                 		ch = *(unsigned char *)fmt++;  
-                		color |= get_color(1, ch);  
+                		color |= get_color(1, ch);
+                                ch |= color;  
                 		c_flag = 0;  
             		}  
             		if (ch == '#') //background color  
