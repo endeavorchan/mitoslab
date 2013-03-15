@@ -153,17 +153,21 @@ vprintfmt(void (*putch)(int, void*), void *putdat, const char *fmt, va_list ap)
 	char padc;
         int c_flag;
         uint16_t color = 0;
+        int colortag = 0;
 
 	while (1) {
 		while ((ch = *(unsigned char *) fmt++) != '%') {
 			if (ch == '\0')
 				return;
+                        if (colortag){
+                                ch |= color;
+                        }
 		        c_flag = 1;  
             		if (ch == '$') //foreground color  
             		{  
                 		ch = *(unsigned char *)fmt++;  
                 		color |= get_color(1, ch);
-                                ch |= color;  
+                                colortag = 1;  
                 		c_flag = 0;  
             		}  
             		if (ch == '#') //background color  
