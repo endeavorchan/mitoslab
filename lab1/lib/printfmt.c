@@ -7,6 +7,17 @@
 #include <inc/string.h>
 #include <inc/stdarg.h>
 #include <inc/error.h>
+//printfmt.c, hky added  
+#define FORE_BLACK      (0)  
+#define FORE_RED            (4 << 8)  
+#define FORE_GREEN      (2 << 8)  
+#define FORE_BLUE       (1 << 8)  
+#define FORE_WHITE      ((4+2+1) << 8)  
+#define BACK_BLACK      (0)  
+#define BACK_RED        (4 << 12)  
+#define BACK_GREEN      (2 << 12)  
+#define BACK_BLUE       (1 << 12)  
+#define BACK_WHITE      ((4+2+1) << 12)  
 
 /*
  * Space or zero padding and a field width are supported for the numeric
@@ -17,6 +28,58 @@
  * The integer may be positive or negative,
  * so that -E_NO_MEM and E_NO_MEM are equivalent.
  */
+
+  /* choose colors of back and fore ground*/
+int get_color(int fore_back, char type)  
+{  
+    int color = 0;  
+  
+    if (fore_back == 1) //foreground  
+    {  
+        switch (type)  
+        {  
+            case 'R':  
+                color = FORE_RED;  
+                break;  
+            case 'G':  
+                color = FORE_GREEN;  
+                break;  
+            case 'B':  
+                color = FORE_BLUE;  
+                break;  
+            case 'W':  
+                color = FORE_WHITE;  
+            case 'K':  
+                color = FORE_BLACK;  
+            default:  
+                break;  
+        }  
+    }  
+    else //background  
+    {  
+        switch (type)  
+        {  
+            case 'R':  
+                color = BACK_RED;  
+                break;  
+            case 'G':  
+                color = BACK_GREEN;  
+                break;  
+            case 'B':  
+                color = BACK_BLUE;  
+                break;  
+            case 'W':  
+                color = BACK_WHITE;  
+            case 'K':  
+                color = BACK_BLACK;  
+            default:  
+                break;  
+        }  
+    }  
+    return color;  
+}  
+
+/* end */
 
 static const char * const error_string[MAXERROR + 1] =
 {
@@ -93,7 +156,22 @@ vprintfmt(void (*putch)(int, void*), void *putdat, const char *fmt, va_list ap)
 		while ((ch = *(unsigned char *) fmt++) != '%') {
 			if (ch == '\0')
 				return;
-			putch(ch, putdat);
+		        c_flag = 1;  
+            		if (ch == '$') //foreground color  
+            		{  
+                		ch = *(unsigned char *)fmt++;  
+                		color |= get_color(1, ch);  
+                		c_flag = 0;  
+            		}  
+            		if (ch == '#') //background color  
+            {  
+                ch = *(unsigned char *)fmt++;  
+                color |= get_color(0, ch);  
+                c_flag = 0;  
+            }  
+            if (c_flag)  
+                putch(ch, putdat);  
+			//putch(ch, putdat);
 		}
 
 		// Process a %-escape sequence
